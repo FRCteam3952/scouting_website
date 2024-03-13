@@ -25,9 +25,9 @@
       e.target.remove();
     }
 
-    function hijack(e) {
+    function hijack(e, data_div) {
       console.log(e);
-      var i = document.createElement('img');
+      let i = document.createElement('img');
 
       // create plus sign
       i.src = 'plus.png';
@@ -37,13 +37,34 @@
 
       i.onclick = onSelectionClick;
 
-      document.body.appendChild(i);
+      document.getElementById(data_div).appendChild(i);
+
+      // submitForm();
     }
+
+    function anadir(formData, data_div) {
+      for (const i of document.getElementById(data_div).children) {
+        let l = i.style.left;
+        let t = i.style.top;
+
+        l = Number(l.substring(0, l.length - 2)) + 16;
+        t = Number(t.substring(0, t.length - 2)) + 16;
+        formData.append(data_div, [l, t]);
+      }
+    }
+
     function submitForm(e) {
-      var formData = JSON.stringify($("mainForm").serializeArray());
-      console.log(e)
+      var formData = new FormData(document.getElementById("mainForm"));
+      anadir(formData, "attempted_notes");
+      anadir(formData, "shot_locations");
+
+      var request = new XMLHttpRequest();
+      request.open('POST', 'https://example.com/sentir');
+      request.send(formData);
+      console.log("SENT!")
       console.log(formData)
     }
+
   </script>
 
 </head>
@@ -60,14 +81,10 @@
         name="autoNotesAttempted">
     </div>
 
+    <h2>Attempted Notes</h2>
+    <div id="attempted_notes"></div>
     <div class="clickable_map">
-      <img src="map.png" alt="FRC Map" onclick="hijack(event)" usemap="#note_map">
-
-
-      <img src="map.png" alt="FRC Map" onclick="hijack(event)" usemap="#note_map">
-      <map id="note_map">
-        <area shape="circle" coords="488, 635, 517, 666" alt="Note">
-      </map>
+      <img src="map.png" alt="FRC Map" onclick="hijack(event, 'attempted_notes')" usemap="#note_map">
     </div>
 
     <h1>Teleoperated</h1>
@@ -78,6 +95,12 @@
       <span class="input-group-text">/</span>
       <input type="number" class="form-control" placeholder="Notes Attempted" aria-label="Notes Attempted"
         name="teleNotesAttempted">
+    </div>
+
+    <h2>Locations where notes are shot from.</h2>
+    <div id="shot_locations"></div>
+    <div class="clickable_map">
+      <img src="map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations')" usemap="#note_map">
     </div>
 
     <div class="mb-3 form-check">
