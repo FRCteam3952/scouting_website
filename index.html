@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +29,7 @@
       let i = document.createElement('img');
 
       // create plus sign
-      i.src = 'plus.png';
+      i.src = 'resources/plus.png';
       i.style.position = 'absolute';
       i.style.left = event.layerX - 16 + 'px';
       i.style.top = event.layerY - 16 + 'px';
@@ -53,73 +52,103 @@
       }
     }
 
+    function err_msg_box(msg) {
+      document.getElementById("msg").innerHTML = msg;
+    }
+
     function submitForm(e) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      err_msg_box("");
       var formData = new FormData(document.getElementById("mainForm"));
       anadir(formData, "attempted_notes");
       anadir(formData, "shot_locations");
-
+      var data = {};
+      formData.forEach((value, key) => data[key] = value);
+      // check data to make sure it makes sense
+      if(data["autoNotesAttempted"] < data["autoNotesScored"]) {
+        err_msg_box("BAD VALUES: Auto notes scored/attempted.");
+        return;
+      }
+      if(data["teleNotesAttempted"] < data["teleNotesScored"]) {
+        err_msg_box("BAD VALUES: Teleop notes scored/attempted.");
+        return;
+      }
+      var json = JSON.stringify(data);
+      console.log("attempting to post " + data);
       var request = new XMLHttpRequest();
-      request.open('POST', 'https://example.com/sentir');
-      request.send(formData);
-      console.log("SENT!")
-      console.log(formData)
+      request.open('POST', document.URL);
+      request.send(json);
+      console.log("SENT!");
+      var has_err = false;
+      request.addEventListener("error", (event) => {
+        has_err = true;
+        err_msg_box("Error: unable to post data. Please report this issue ASAP!");
+      });
+      request.addEventListener("loadend", (event) => {
+        if(!has_err) {
+          location.reload();
+        }
+      });
     }
 
   </script>
 
 </head>
 
+<style>
+  .group label {
+    font-size: 100px;
+  }
+</style>
+
 <body>
-  <form onsubmit="submitForm(event)" id="mainForm">
+  <div class="group">
+    <label id="msg"></label>
+  </div>
+  <form onsubmit="submitForm(event);return false;" id="mainForm">
+    <h1>General</h1>
+    <div class="input-group mb-3">
+      <input type="number" class="form-control" placeholder="Team #" min="0" aria-label="Team #" name="team_number" required>
+    </div>
+    <div class="input-group mb-3">
+      <input type="number" class="form-control" placeholder="Match #" min="0" aria-label="Match #" name="match_number" required>
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="Qual match?" name="is_qual" checked>
+      <label class="form-check-label" for="Qual match?">Qualification match?</label>
+    </div>
     <h1>Autonomous</h1>
 
     <div class="input-group mb-3">
-      <input type="number" class="form-control" placeholder="Notes Scored" aria-label="Notes Scored"
-        name="autoNotesScored">
+      <input type="number" class="form-control" placeholder="Notes Scored" min="0" aria-label="Notes Scored"
+        name="autoNotesScored" required>
       <span class="input-group-text">/</span>
-      <input type="number" class="form-control" placeholder="Notes Attempted" aria-label="Notes Attempted"
-        name="autoNotesAttempted">
+      <input type="number" class="form-control" placeholder="Notes Attempted" min="0" aria-label="Notes Attempted"
+        name="autoNotesAttempted" required>
     </div>
 
-    <h3>Select the Attempted Notes</h3>
+    <h2>Attempted Notes</h2>
     <div id="attempted_notes"></div>
     <div class="clickable_map">
-      <img src="map.png" alt="FRC Map" usemap="#note_map">
-      <map name="note_map">
-        <area alt="" title="" coords="501,537,19" shape="circle">
-        <area alt="" title="" coords="503,661,14" shape="circle">
-        <area alt="" title="" coords="501,789,17" shape="circle">
-        <area alt="" title="" coords="958,253,20" shape="circle">
-        <area alt="" title="" coords="960,397,16" shape="circle">
-        <area alt="" title="" coords="958,538,20" shape="circle">
-        <area alt="" title="" coords="958,682,20" shape="circle">
-        <area alt="" title="" coords="960,824,18" shape="circle">
-        <area alt="" title="" coords="1418,541,17" shape="circle">
-        <area alt="" title="" coords="1416,664,19" shape="circle">
-        <area alt="" title="" coords="1416,787,18" shape="circle">
-      </map>
-    </div>
-
-    <h3>Select where notes are shot from.</h3>
-    <div id="attempted_notes"></div>
-    <div class="clickable_map">
-      <img src="map.png" alt="FRC Map" onclick="hijack(event, 'attempted_notes')">
+      <img src="resources/map.png" alt="FRC Map" onclick="hijack(event, 'attempted_notes')" usemap="#note_map">
     </div>
 
     <h1>Teleoperated</h1>
 
     <div class="input-group mb-3">
-      <input type="number" class="form-control" placeholder="Notes Scored" aria-label="Notes Scored"
-        name="teleNotesScored">
+      <input type="number" class="form-control" placeholder="Notes Scored" min="0" aria-label="Notes Scored"
+        name="teleNotesScored" required>
       <span class="input-group-text">/</span>
-      <input type="number" class="form-control" placeholder="Notes Attempted" aria-label="Notes Attempted"
-        name="teleNotesAttempted">
+      <input type="number" class="form-control" placeholder="Notes Attempted" min="0" aria-label="Notes Attempted"
+        name="teleNotesAttempted" required>
     </div>
 
-    <h3>Select where they can shoot the notes.</h3>
+    <h2>Locations where notes are shot from.</h2>
     <div id="shot_locations"></div>
     <div class="clickable_map">
-      <img src="map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations')">
+      <img src="resources/map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations')" usemap="#note_map">
     </div>
 
     <div class="mb-3 form-check">
