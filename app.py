@@ -22,9 +22,6 @@ def post():
             #     res[k] = int(res[k]);
             # elif res[k] == "on":
             #     res[k] = True;
-    if ("is_qual" not in res):
-        res["is_qual"] = "off"
-
     print("saving:", res);
 
     team_folder = data / res["team_number"] / ("qual" if res["is_qual"] == "on" else "playoff");
