@@ -129,11 +129,30 @@
         name="autoNotesAttempted" required>
     </div>
 
-    <h2>Attempted Notes</h2>
+    <h3>Select the Attempted Notes</h3>
     <div id="attempted_notes"></div>
     <div class="clickable_map">
-      <img src="resources/map.png" alt="FRC Map" onclick="hijack(event, 'attempted_notes')" usemap="#note_map">
+      <img src="resources/map.png" alt="FRC Map" usemap="#note_map">
+      <map name="note_map">
+        <area alt="" title="" coords="501,537,19" shape="circle">
+        <area alt="" title="" coords="503,661,14" shape="circle">
+        <area alt="" title="" coords="501,789,17" shape="circle">
+        <area alt="" title="" coords="958,253,20" shape="circle">
+        <area alt="" title="" coords="960,397,16" shape="circle">
+        <area alt="" title="" coords="958,538,20" shape="circle">
+        <area alt="" title="" coords="958,682,20" shape="circle">
+        <area alt="" title="" coords="960,824,18" shape="circle">
+        <area alt="" title="" coords="1418,541,17" shape="circle">
+        <area alt="" title="" coords="1416,664,19" shape="circle">
+        <area alt="" title="" coords="1416,787,18" shape="circle">
+      </map>
     </div>
+
+    <h3>Select where notes are shot from.</h3>
+    <div id="attempted_notes"></div>
+    <div class="clickable_map">
+      <img src="resources/map.png" alt="FRC Map" onclick="hijack(event, 'attempted_notes')">
+    </div>>
 
     <h1>Teleoperated</h1>
 
@@ -145,10 +164,10 @@
         name="teleNotesAttempted" required>
     </div>
 
-    <h2>Locations where notes are shot from.</h2>
+    <h3>Select where they can shoot the notes.</h3>
     <div id="shot_locations"></div>
     <div class="clickable_map">
-      <img src="resources/map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations')" usemap="#note_map">
+      <img src="resources/map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations')">
     </div>
 
     <div class="mb-3 form-check">
