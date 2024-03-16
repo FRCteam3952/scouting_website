@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,11 +68,11 @@
       var data = {};
       formData.forEach((value, key) => data[key] = value);
       // check data to make sure it makes sense
-      if(data["autoNotesAttempted"] < data["autoNotesScored"]) {
+      if (data["autoNotesAttempted"] < data["autoNotesScored"]) {
         err_msg_box("BAD VALUES: Auto notes scored/attempted.");
         return;
       }
-      if(data["teleNotesAttempted"] < data["teleNotesScored"]) {
+      if (data["teleNotesAttempted"] < data["teleNotesScored"]) {
         err_msg_box("BAD VALUES: Teleop notes scored/attempted.");
         return;
       }
@@ -87,7 +88,7 @@
         err_msg_box("Error: unable to post data. Please report this issue ASAP!");
       });
       request.addEventListener("loadend", (event) => {
-        if(!has_err) {
+        if (!has_err) {
           location.reload();
         }
       });
@@ -101,6 +102,10 @@
   .group label {
     font-size: 100px;
   }
+
+  .frcmap {
+    width: 100%;
+  }
 </style>
 
 <body>
@@ -110,10 +115,12 @@
   <form onsubmit="submitForm(event);return false;" id="mainForm">
     <h1>General</h1>
     <div class="input-group mb-3">
-      <input type="number" class="form-control" placeholder="Team #" min="0" aria-label="Team #" name="team_number" required>
+      <input type="number" class="form-control" placeholder="Team #" min="0" aria-label="Team #" name="team_number"
+        required>
     </div>
     <div class="input-group mb-3">
-      <input type="number" class="form-control" placeholder="Match #" min="0" aria-label="Match #" name="match_number" required>
+      <input type="number" class="form-control" placeholder="Match #" min="0" aria-label="Match #" name="match_number"
+        required>
     </div>
     <div class="mb-3 form-check">
       <input type="checkbox" class="form-check-input" id="Qual match?" name="is_qual" checked>
@@ -132,7 +139,7 @@
     <h3>Select the Attempted Notes</h3>
     <div id="attempted_notes"></div>
     <div class="clickable_map">
-      <img src="resources/map.png" alt="FRC Map" usemap="#note_map">
+      <img src="resources/map.png" alt="FRC Map" usemap="#note_map" class="frcmap">
       <map name="note_map">
         <area alt="" title="" coords="501,537,19" shape="circle">
         <area alt="" title="" coords="503,661,14" shape="circle">
@@ -151,8 +158,8 @@
     <h3>Select where notes are shot from.</h3>
     <div id="attempted_notes"></div>
     <div class="clickable_map">
-      <img src="resources/map.png" alt="FRC Map" onclick="hijack(event, 'attempted_notes')">
-    </div>>
+      <img src="resources/map.png" alt="FRC Map" onclick="hijack(event, 'attempted_notes')" class="frcmap">
+    </div>
 
     <h1>Teleoperated</h1>
 
@@ -167,7 +174,7 @@
     <h3>Select where they can shoot the notes.</h3>
     <div id="shot_locations"></div>
     <div class="clickable_map">
-      <img src="resources/map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations')">
+      <img src="resources/map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations')" class="frcmap">
     </div>
 
     <div class="mb-3 form-check">
