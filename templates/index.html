@@ -92,14 +92,17 @@
         const response = await fetch(document.URL + "/post", {
           method: "POST",
           body: formData,
-        });
+        })
 
-        console.log("Sent:", await response.json());
+        if (await response.status != 200) {
+          alert("AN ERROR OCCURED: " + (await response.json())["message"]);
+        } else {
+          alert("Successfully sent Data!");
+        }
       } catch (error) {
         has_err = true;
-        err_msg_box("Error: " + error);
+        alert("Error: " + error);
       }
-
 
       if (!has_err) {
         location.reload();

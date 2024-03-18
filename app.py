@@ -1,4 +1,4 @@
-from flask import Flask, json, render_template, request;
+from flask import Flask, json, render_template, request, abort, json;
 from pathlib import Path;
 app = Flask(__name__);
 
@@ -27,11 +27,15 @@ def post():
     team_folder = data / res["team_number"] / ("qual" if res["is_qual"] == "on" else "playoff");
     team_folder.mkdir(parents=True, exist_ok=True);
     data_file = team_folder / (res["match_number"] + ".txt");
+    if data_file.exists():
+        return json.dumps({"message": "This submission already exists!"}), 400
     with data_file.open("w", encoding ="utf-8") as f:
         f.write(json.dumps(res));
+        return json.dumps({"message": "Success"}), 200
+
+    return json.dumps({"message": "Internal Server Error"}), 500
 
     
-    return res
 
 if __name__ == "__main__":
     app.run(debug=True)
