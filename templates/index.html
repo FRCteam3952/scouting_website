@@ -46,8 +46,8 @@
       // create plus sign
       i.src = '/static/plus.png';
       i.style.position = 'absolute';
-      i.style.left = event.layerX - 16 + 'px';
-      i.style.top = event.layerY - 16 + 'px';
+      i.style.left = event.offsetX - 16 + 'px';
+      i.style.top = event.offsetY - 16 + 'px';
 
       i.onclick = onSelectionClick;
 
@@ -123,6 +123,10 @@
   .frcmap {
     width: 100%;
   }
+
+  .clickable_map {
+    position: relative;
+  }
 </style>
 
 <body>
@@ -187,9 +191,9 @@
     </div>
 
     <h3>Select where notes are shot from.</h3>
-    <div id="shot_locations_auton"></div>
     <div class="clickable_map">
       <img src="/static/map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations_auton')" class="frcmap">
+      <div id="shot_locations_auton"></div>
     </div>
 
     <h1>Teleoperated</h1>
@@ -203,9 +207,9 @@
     </div>
 
     <h3>Select where they can shoot the notes.</h3>
-    <div id="shot_locations_teleop"></div>
     <div class="clickable_map">
       <img src="/static/map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations_teleop')" class="frcmap">
+      <div id="shot_locations_teleop"></div>
     </div>
 
     <div class="mb-3 form-check">
