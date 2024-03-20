@@ -1,3 +1,4 @@
+import logging
 from flask import Flask, json, render_template, request, abort, json;
 from pathlib import Path;
 app = Flask(__name__);
@@ -25,7 +26,7 @@ def post():
             #     res[k] = int(res[k]);
             # elif res[k] == "on":
             #     res[k] = True;
-    print("saving:", res);
+    app.logger.info("GOT RESPONSE from [" + request.remote_addr + "] | Team Number: " + res["team_number"] + ", Match Number: " + res["match_number"]);
 
     if (int(res["autoNotesScored"]) > int(res["autoNotesAttempted"])):
         return json.dumps({"message": "Auton Notes Scored > Auton Notes Attempted! This is impossible"}), 400
@@ -47,4 +48,11 @@ def post():
     
 
 if __name__ == "__main__":
-    app.run(debug=True)
+
+    app.run(debug=False)
+else:
+    # we are running wtih Gunicorn
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
+

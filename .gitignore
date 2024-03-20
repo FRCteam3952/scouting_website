@@ -1,3 +1,4 @@
 # Hide our output data folder
 data/
 __pycache__/
+.venv/
