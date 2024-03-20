@@ -19,7 +19,8 @@ def post():
         if (k not in ('attempted_notes', "shot_locations_auton", "shot_locations_teleop")):
             if ("on" in res[k]):
                 res[k] = "on"
-            res[k] = res[k][0];
+            else:
+                res[k] = res[k][0];
             # if (res[k].isnumeric()):
             #     res[k] = int(res[k]);
             # elif res[k] == "on":
