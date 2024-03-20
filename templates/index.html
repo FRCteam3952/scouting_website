@@ -57,13 +57,17 @@
     }
 
     function anadir(formData, data_div) {
+      let width = document.getElementsByClassName("frcmap")[0].width
+      let height = document.getElementsByClassName("frcmap")[0].height
+
       for (const i of document.getElementById(data_div).children) {
         let l = i.style.left;
         let t = i.style.top;
 
         l = Number(l.substring(0, l.length - 2)) + 16;
         t = Number(t.substring(0, t.length - 2)) + 16;
-        formData.append(data_div, [l, t]);
+
+        formData.append(data_div, [l / width, t / height]);
       }
     }
 
