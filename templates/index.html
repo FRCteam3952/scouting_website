@@ -9,6 +9,20 @@
   <!-- jquery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+  <!-- map highlighting -->
+  <script>
+    $(document).ready(function () {
+      $(".clickable_note").on("click", function (e) {
+        e.preventDefault();
+        // console.log(e.currentTarget);
+        console.log(e.currentTarget.getAttribute("data-noteid"));
+        let opac = getComputedStyle(e.target).getPropertyValue("opacity");
+        e.target.style.opacity = (opac == 0) ? 0.7 : 0;
+      });
+    });   
+  </script>
+
+
   <!-- bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -63,38 +77,26 @@
       e.stopImmediatePropagation();
       err_msg_box("");
       var formData = new FormData(document.getElementById("mainForm"));
-      anadir(formData, "attempted_notes");
-      anadir(formData, "shot_locations");
-      // var data = {};
-      // formData.forEach((value, key) => data[key] = value);
-      //
-      // // check data to make sure it makes sense
-      // if (data["autoNotesAttempted"] < data["autoNotesScored"]) {
-      //   err_msg_box("BAD VALUES: Auto notes scored/attempted.");
-      //   return;
-      // }
-      // if (data["teleNotesAttempted"] < data["teleNotesScored"]) {
-      //   err_msg_box("BAD VALUES: Teleop notes scored/attempted.");
-      //   return;
-      // }
+      anadir(formData, "shot_locations_auton");
+      anadir(formData, "shot_locations_teleop");
 
-      // var json = JSON.stringify(data);
-      // console.log("attempting to post " + data);
-      // var request = new XMLHttpRequest();
-      // request.open('POST', document.URL);
-      // request.send(json);
-      //
-      // const res = fetch()
+      for (const i of document.getElementsByClassName("clickable_note")) {
+        if (i.children[0].style.opacity == 0) continue;
+        formData.append("attempted_notes", i.getAttribute("data-noteid"));
+      }
+
+      // check data on server side
 
 
       var has_err = false;
       try {
-        const response = await fetch(document.URL + "/post", {
+        const response = await fetch(window.location.origin + "/post", {
           method: "POST",
           body: formData,
         })
 
         if (await response.status != 200) {
+          has_err = true;
           alert("AN ERROR OCCURED: " + (await response.json())["message"]);
         } else {
           alert("Successfully sent Data!");
@@ -127,7 +129,7 @@
   <div class="group">
     <label id="msg"></label>
   </div>
-  <form onsubmit="submitForm(event);return false;" id="mainForm">
+  <form onsubmit="submitForm(event); return false;" id="mainForm">
     <h1>General</h1>
     <div class="input-group mb-3">
       <input type="number" class="form-control" placeholder="Team #" min="0" aria-label="Team #" name="team_number"
@@ -153,28 +155,41 @@
     </div>
 
     <h3>Select the Attempted Notes</h3>
-    <div id="attempted_notes"></div>
-    <div class="clickable_map">
-      <img src="/static/map.png" alt="FRC Map" usemap="#note_map" class="frcmap">
-      <map name="note_map">
-        <area alt="" title="" coords="501,537,19" shape="circle">
-        <area alt="" title="" coords="503,661,14" shape="circle">
-        <area alt="" title="" coords="501,789,17" shape="circle">
-        <area alt="" title="" coords="958,253,20" shape="circle">
-        <area alt="" title="" coords="960,397,16" shape="circle">
-        <area alt="" title="" coords="958,538,20" shape="circle">
-        <area alt="" title="" coords="958,682,20" shape="circle">
-        <area alt="" title="" coords="960,824,18" shape="circle">
-        <area alt="" title="" coords="1418,541,17" shape="circle">
-        <area alt="" title="" coords="1416,664,19" shape="circle">
-        <area alt="" title="" coords="1416,787,18" shape="circle">
-      </map>
+    <div id="attempted_notes">
+      <!-- <img src="/static/map.png" alt="FRC Map" usemap="#notemap" class="frcmap"> -->
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 0 1920 1080">
+        <image width="1920" height="1080" xlink:href="/static/map.png"></image> <a class="clickable_note" xlink:href=""
+          data-noteid="1">
+          <rect x="479" y="516" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+        </a><a class="clickable_note" xlink:href="" data-noteid="2">
+          <rect x="479" y="638" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+        </a><a class="clickable_note" xlink:href="" data-noteid="3">
+          <rect x="480" y="762" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+        </a><a class="clickable_note" xlink:href="" data-noteid="4">
+          <rect x="935" y="231" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+        </a><a class="clickable_note" xlink:href="" data-noteid="8">
+          <rect x="939" y="799" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+        </a><a class="clickable_note" xlink:href="" data-noteid="7">
+          <rect x="939" y="660" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+        </a><a class="clickable_note" xlink:href="" data-noteid="6">
+          <rect x="936" y="517" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+        </a><a class="clickable_note" xlink:href="" data-noteid="5">
+          <rect x="936" y="371" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+        </a><a class="clickable_note" xlink:href="" data-noteid="9">
+          <rect x="1394" y="513" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+        </a><a class="clickable_note" xlink:href="" data-noteid="10">
+          <rect x="1395" y="636" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+        </a><a class="clickable_note" xlink:href="" data-noteid="11">
+          <rect x="1397" y="757" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+        </a>
+      </svg>
     </div>
 
     <h3>Select where notes are shot from.</h3>
-    <div id="attempted_notes"></div>
+    <div id="shot_locations_auton"></div>
     <div class="clickable_map">
-      <img src="/static/map.png" alt="FRC Map" onclick="hijack(event, 'attempted_notes')" class="frcmap">
+      <img src="/static/map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations_auton')" class="frcmap">
     </div>
 
     <h1>Teleoperated</h1>
@@ -188,9 +203,9 @@
     </div>
 
     <h3>Select where they can shoot the notes.</h3>
-    <div id="shot_locations"></div>
+    <div id="shot_locations_teleop"></div>
     <div class="clickable_map">
-      <img src="/static/map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations')" class="frcmap">
+      <img src="/static/map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations_teleop')" class="frcmap">
     </div>
 
     <div class="mb-3 form-check">
