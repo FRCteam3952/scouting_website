@@ -17,6 +17,8 @@ def post():
     # remove all the arrays that only have 1 value
     for k in res:
         if (k not in ('attempted_notes', "shot_locations_auton", "shot_locations_teleop")):
+            if ("on" in res[k]):
+                res[k] = "on"
             res[k] = res[k][0];
             # if (res[k].isnumeric()):
             #     res[k] = int(res[k]);
