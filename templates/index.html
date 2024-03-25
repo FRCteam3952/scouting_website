@@ -170,6 +170,12 @@
       onclick="incrementInput('autoNotesScored'); incrementInput('autoNotesAttempted')">Scored</button>
     <button type="button" class="btn btn-danger btn-lg" onclick="incrementInput('autoNotesAttempted')">Missed</button>
 
+    <h3>Select where notes are shot from.</h3>
+    <div class="clickable_map">
+      <img src="/static/map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations_auton')" class="frcmap">
+      <div id="shot_locations_auton"></div>
+    </div>
+
     <h3>Select the Attempted Notes</h3>
     <div id="attempted_notes">
       <!-- <img src="/static/map.png" alt="FRC Map" usemap="#notemap" class="frcmap"> -->
@@ -177,35 +183,29 @@
         viewBox="0 0 1920 1080">
         <image width="1920" height="1080" xlink:href="/static/map.png"></image> <a class="clickable_note" xlink:href=""
           data-noteid="1">
-          <rect x="479" y="491" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+          <rect x="354" y="510" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
         </a><a class="clickable_note" xlink:href="" data-noteid="2">
-          <rect x="479" y="613" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+          <rect x="354" y="666" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
         </a><a class="clickable_note" xlink:href="" data-noteid="3">
-          <rect x="480" y="737" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+          <rect x="354" y="825" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
         </a><a class="clickable_note" xlink:href="" data-noteid="4">
-          <rect x="935" y="206" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+          <rect x="932" y="150" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
         </a><a class="clickable_note" xlink:href="" data-noteid="8">
-          <rect x="939" y="774" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+          <rect x="932" y="870" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
         </a><a class="clickable_note" xlink:href="" data-noteid="7">
-          <rect x="939" y="635" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+          <rect x="932" y="690" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
         </a><a class="clickable_note" xlink:href="" data-noteid="6">
-          <rect x="936" y="491" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+          <rect x="932" y="510" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
         </a><a class="clickable_note" xlink:href="" data-noteid="5">
-          <rect x="936" y="346" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+          <rect x="932" y="330" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
         </a><a class="clickable_note" xlink:href="" data-noteid="9">
-          <rect x="1394" y="491" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+          <rect x="1510" y="510" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
         </a><a class="clickable_note" xlink:href="" data-noteid="10">
-          <rect x="1395" y="611" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+          <rect x="1510" y="666" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
         </a><a class="clickable_note" xlink:href="" data-noteid="11">
-          <rect x="1397" y="732" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
+          <rect x="1510" y="825" fill="#f00" style="opacity: 0;" width="50" height="50"></rect>
         </a>
       </svg>
-    </div>
-
-    <h3>Select where notes are shot from.</h3>
-    <div class="clickable_map">
-      <img src="/static/map.png" alt="FRC Map" onclick="hijack(event, 'shot_locations_auton')" class="frcmap">
-      <div id="shot_locations_auton"></div>
     </div>
 
     <h1>Teleoperated</h1>
