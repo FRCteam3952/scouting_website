@@ -115,6 +115,10 @@
       }
     }
 
+    function incrementInput(inputId) {
+      document.getElementById(inputId).stepUp();
+    }
+
   </script>
 
 </head>
@@ -156,11 +160,15 @@
 
     <div class="input-group mb-3">
       <input type="number" class="form-control" placeholder="Notes Scored" min="0" aria-label="Notes Scored"
-        name="autoNotesScored" required>
+        name="autoNotesScored" required id="autoNotesScored">
       <span class="input-group-text">/</span>
       <input type="number" class="form-control" placeholder="Notes Attempted" min="0" aria-label="Notes Attempted"
-        name="autoNotesAttempted" required>
+        name="autoNotesAttempted" required id="autoNotesAttempted">
     </div>
+
+    <button type="button" class="btn btn-success btn-lg"
+      onclick="incrementInput('autoNotesScored'); incrementInput('autoNotesAttempted')">Scored</button>
+    <button type="button" class="btn btn-danger btn-lg" onclick="incrementInput('autoNotesAttempted')">Missed</button>
 
     <h3>Select the Attempted Notes</h3>
     <div id="attempted_notes">
@@ -204,11 +212,15 @@
 
     <div class="input-group mb-3">
       <input type="number" class="form-control" placeholder="Notes Scored" min="0" aria-label="Notes Scored"
-        name="teleNotesScored" required>
+        name="teleNotesScored" required id="teleNotesScored">
       <span class="input-group-text">/</span>
       <input type="number" class="form-control" placeholder="Notes Attempted" min="0" aria-label="Notes Attempted"
-        name="teleNotesAttempted" required>
+        name="teleNotesAttempted" required id="teleNotesAttempted">
     </div>
+
+    <button type="button" class="btn btn-success btn-lg"
+      onclick="incrementInput('teleNotesScored'); incrementInput('teleNotesAttempted')">Scored</button>
+    <button type="button" class="btn btn-danger btn-lg" onclick="incrementInput('teleNotesAttempted')">Missed</button>
 
     <h3>Select where they can shoot the notes.</h3>
     <div class="clickable_map">
