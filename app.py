@@ -40,7 +40,7 @@ def post():
     if data_file.exists():
         return json.dumps({"message": "This submission already exists!"}), 400
     with data_file.open("w", encoding ="utf-8") as f:
-        f.write(json.dumps(res));
+        f.write(json.dumps(res, ident=4));
         return json.dumps({"message": "Success"}), 200
 
     return json.dumps({"message": "Internal Server Error"}), 500

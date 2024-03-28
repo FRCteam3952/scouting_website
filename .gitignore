@@ -2,3 +2,7 @@
 data/
 __pycache__/
 .venv/
+
+# don't push test data
+csv/*
+data/*
